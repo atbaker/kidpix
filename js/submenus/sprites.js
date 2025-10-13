@@ -81,7 +81,7 @@ function init_sprites_submenu() {
 
     KiddoPaint.Submenu.sprites.push({
         name: 'Next Page',
-        emoji: '↪',
+        text: 'NEXT PAGE',
         handler: function(e) {
             (e.type == 'contextmenu') ? KiddoPaint.Sprite.prevPage(): KiddoPaint.Sprite.nextPage();
             init_sprites_submenu();
@@ -91,7 +91,7 @@ function init_sprites_submenu() {
 
     KiddoPaint.Submenu.sprites.push({
         name: 'Next Stamp Pack',
-        emoji: '➡️',
+        text: 'NEXT PACK',
         handler: function(e) {
             (e.type == 'contextmenu') ? KiddoPaint.Sprite.prevSprite(): KiddoPaint.Sprite.nextSprite();
             init_sprites_submenu();

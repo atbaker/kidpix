@@ -148,6 +148,87 @@ body {
     line-height: 1em;
 }
 
+#modifier-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 5px;
+}
+
+.shift-toggle {
+    width: 50px;
+    height: 32px;
+    margin: 0px;
+    -webkit-border-radius: 0px;
+    -webkit-appearance: none;
+    border-radius: 0;
+    text-align: center;
+    font-size: 10px;
+    font-weight: normal;
+    padding: 0px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-active {
+    background-color: #ffeb3b;
+    font-weight: bold;
+}
+
+.active-tool {
+    background-color: #ffeb3b;
+}
+
+#status-bar {
+    background-color: transparent;
+    border-top: none;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+    text-transform: uppercase;
+    clear: both;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    box-sizing: border-box;
+}
+
+.status-section {
+    flex: 1;
+}
+
+.status-section:first-child {
+    text-align: left;
+}
+
+.status-section:nth-child(2) {
+    text-align: center;
+}
+
+.status-section:last-child {
+    text-align: right;
+}
+
+#status-bar strong {
+    color: #000;
+    font-weight: bold;
+}
+
+#current-tool-name,
+#active-modifiers,
+#timer {
+    color: #000;
+    font-weight: normal;
+}
+
+.timer-expired {
+    color: #cc0000;
+    font-weight: bold;
+}
+
 .alphabet {
     line-height: 1em;
     margin: 0;

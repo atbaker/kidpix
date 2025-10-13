@@ -140,11 +140,8 @@ KiddoPaint.Display.loadFromLocalStorage = function() {
         KiddoPaint.Display.clearMain();
         KiddoPaint.Display.main_context.drawImage(img, 0, 0);
     }
-    if (typeof(Storage) != "undefined" && localStorage.getItem("kiddopaint")) {
-        img.src = localStorage.getItem("kiddopaint");
-    } else {
-        img.src = "static/splash.png";
-    }
+    // Removed localStorage loading and splash screen
+    // Canvas always starts blank for fresh Claude commissions
 }
 
 KiddoPaint.Display.canvasToImageData = function(canvas) {
