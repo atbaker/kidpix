@@ -56,8 +56,9 @@ function init_sprites_submenu() {
     KiddoPaint.Submenu.sprites = [];
 
     for (let j = 0; j < maxcols; j++) {
+        let spriteNumber = row * maxcols + j + 1;
         let individualSprite = {
-            name: 'Sprite',
+            name: 'Sprite ' + spriteNumber,
             spriteSheet: sheet,
             spriteRow: row,
             spriteCol: j,

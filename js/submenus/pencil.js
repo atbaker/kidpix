@@ -34,7 +34,7 @@ KiddoPaint.Submenu.pencil = [{
         }
     },
     {
-        name: 'Size 100',
+        name: 'Size 150',
         imgSrc: 'img/tool-submenu-pencil-size-6.png',
         handler: function() {
             KiddoPaint.Tools.Pencil.size = 25;

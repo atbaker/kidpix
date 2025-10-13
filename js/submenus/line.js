@@ -34,7 +34,7 @@ KiddoPaint.Submenu.line = [{
         }
     },
     {
-        name: 'Size 100',
+        name: 'Size 150',
         imgSrc: 'img/pw6.png',
         handler: function() {
             KiddoPaint.Tools.Line.size = 25;

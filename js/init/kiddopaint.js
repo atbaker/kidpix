@@ -35,6 +35,33 @@ var ToolNames = {
 var countdownTimer = null;
 var remainingSeconds = 5 * 60; // 5 minutes
 
+// Current subtool name tracking
+KiddoPaint.Current.subtoolName = null;
+
+// Update the entire status bar display
+function updateStatusBar() {
+    // Update tool name
+    var toolNameElement = document.getElementById('current-tool-name');
+    if (toolNameElement && KiddoPaint.Current.toolName) {
+        toolNameElement.textContent = KiddoPaint.Current.toolName;
+    }
+
+    // Update subtool name
+    var subtoolNameElement = document.getElementById('current-subtool-name');
+    if (subtoolNameElement) {
+        subtoolNameElement.textContent = KiddoPaint.Current.subtoolName || '(none)';
+    }
+
+    // Update color
+    var colorElement = document.getElementById('current-color');
+    if (colorElement && KiddoPaint.Current.color) {
+        colorElement.textContent = KiddoPaint.Current.color.toUpperCase();
+    }
+
+    // Update modifiers
+    updateActiveModifiers();
+}
+
 // Update active modifiers display
 function updateActiveModifiers() {
     var modifiers = [];
@@ -74,6 +101,17 @@ function startCountdownTimer() {
             timerElement.textContent = timeString;
         }
     }, 1000);
+}
+
+// Helper function to invoke a default subtool and update status bar
+function invokeDefaultSubtool(submenuName, subtoolIndex) {
+    subtoolIndex = subtoolIndex || 0;
+    var buttonDetail = KiddoPaint.Submenu[submenuName][subtoolIndex];
+    if (buttonDetail && buttonDetail.handler) {
+        buttonDetail.handler();
+        KiddoPaint.Current.subtoolName = buttonDetail.name;
+        updateStatusBar();
+    }
 }
 
 function init_kiddo_paint() {
@@ -159,6 +197,8 @@ function init_kiddo_paint() {
         init_subtool_bars();
         init_color_selector();
         startCountdownTimer();
+        // Initialize status bar display
+        updateStatusBar();
     }
 }
 
@@ -318,6 +358,7 @@ function colorSelect(e) {
     if (e.which == 1) {
         KiddoPaint.Current.color = colorSelected
         document.getElementById('currentColor').style = "background-color:" + colorSelected;
+        updateStatusBar();
     } else if (e.which == 3) {
         KiddoPaint.Current.altColor = colorSelected;
     } else if (e.which == 2) {
@@ -402,23 +443,13 @@ function init_color_paging() {
 }
 
 function set_active_tool(toolId) {
-    // Remove active class from all tool buttons
-    var toolButtons = document.querySelectorAll('#mainbar .tool');
-    for (var i = 0; i < toolButtons.length; i++) {
-        toolButtons[i].classList.remove('active-tool');
-    }
-    // Add active class to the selected tool
+    // Store the current tool name
     if (toolId) {
-        var activeButton = document.getElementById(toolId);
-        if (activeButton) {
-            activeButton.classList.add('active-tool');
-        }
-        // Update the current tool indicator text
-        var toolName = ToolNames[toolId] || toolId;
-        var toolNameElement = document.getElementById('current-tool-name');
-        if (toolNameElement) {
-            toolNameElement.textContent = toolName;
-        }
+        KiddoPaint.Current.toolName = ToolNames[toolId] || toolId;
+        // Reset subtool when switching main tools
+        KiddoPaint.Current.subtoolName = null;
+        // Update the status bar
+        updateStatusBar();
     }
 }
 
@@ -443,46 +474,50 @@ function init_tool_bar() {
 
     document.getElementById('pencil').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('pencil');
         KiddoPaint.Current.tool = KiddoPaint.Tools.Pencil;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-pencil');
         set_active_tool('pencil');
+        show_generic_submenu('pencil');
+        invokeDefaultSubtool('pencil');
     });
 
     document.getElementById('line').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('line');
         KiddoPaint.Current.tool = KiddoPaint.Tools.Line;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-crosshair');
         set_active_tool('line');
+        show_generic_submenu('line');
+        invokeDefaultSubtool('line');
     });
 
     document.getElementById('square').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('square');
         KiddoPaint.Current.tool = KiddoPaint.Tools.Square;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-crosshair');
         set_active_tool('square');
+        show_generic_submenu('square');
+        invokeDefaultSubtool('square');
     });
 
     document.getElementById('circle').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('circle');
         KiddoPaint.Current.tool = KiddoPaint.Tools.Circle;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-crosshair');
         set_active_tool('circle');
+        show_generic_submenu('circle');
+        invokeDefaultSubtool('circle');
     });
 
     document.getElementById('brush').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
         reset_ranges();
-        show_generic_submenu('wackybrush');
-        KiddoPaint.Submenu.wackybrush[0].handler();
         set_active_tool('brush');
+        show_generic_submenu('wackybrush');
+        invokeDefaultSubtool('wackybrush');
     });
 
     document.getElementById('stamp').addEventListener('mousedown', function() {
@@ -490,15 +525,15 @@ function init_tool_bar() {
         reset_ranges();
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-none');
+        set_active_tool('stamp');
         if (KiddoPaint.Current.modifiedCtrl) {
             show_generic_submenu('stickers');
         } else {
             init_sprites_submenu(); // automatically does for current page
             show_generic_submenu('sprites');
             KiddoPaint.Tools.Stamp.useColor = false;
-            KiddoPaint.Submenu.sprites[0].handler();
+            invokeDefaultSubtool('sprites');
         }
-        set_active_tool('stamp');
     });
 
     document.getElementById('alphabet').addEventListener('mousedown', function() {
@@ -515,11 +550,12 @@ function init_tool_bar() {
 
     document.getElementById('flood').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('flood');
         KiddoPaint.Current.tool = KiddoPaint.Tools.Flood;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-bucket');
         set_active_tool('flood');
+        show_generic_submenu('flood');
+        invokeDefaultSubtool('flood');
     });
 
     document.getElementById('eraser').addEventListener('mousedown', function() {
@@ -527,17 +563,19 @@ function init_tool_bar() {
         KiddoPaint.Current.tool = KiddoPaint.Tools.Eraser;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-crosshair');
-        show_generic_submenu('eraser');
         set_active_tool('eraser');
+        show_generic_submenu('eraser');
+        invokeDefaultSubtool('eraser');
     });
 
     document.getElementById('truck').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('truck');
         KiddoPaint.Current.tool = KiddoPaint.Tools.Cut;
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-crosshair');
         set_active_tool('truck');
+        show_generic_submenu('truck');
+        invokeDefaultSubtool('truck');
     });
 
     document.getElementById('undo').addEventListener('mousedown', function() {
@@ -560,12 +598,13 @@ function init_tool_bar() {
 
     document.getElementById('jumble').addEventListener('mousedown', function() {
         KiddoPaint.Sounds.mainmenu();
-        show_generic_submenu('jumble');
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-guy-smile');
         KiddoPaint.Tools.WholeCanvasEffect.effect = JumbleFx.INVERT;
         KiddoPaint.Current.tool = KiddoPaint.Tools.WholeCanvasEffect;
         set_active_tool('jumble');
+        show_generic_submenu('jumble');
+        invokeDefaultSubtool('jumble');
     });
 };
 
@@ -585,10 +624,11 @@ function init_subtool_bars() {
 
 function init_pencil_subtoolbar() {
     // this is the default, so we show show it
-    show_generic_submenu('pencil');
     KiddoPaint.Display.canvas.classList = "";
     KiddoPaint.Display.canvas.classList.add('cursor-pencil');
     set_active_tool('pencil');
+    show_generic_submenu('pencil');
+    invokeDefaultSubtool('pencil');
 }
 
 function init_alphabet_subtoolbar() {

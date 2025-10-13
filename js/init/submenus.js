@@ -64,9 +64,15 @@ function show_generic_submenu(subtoolbar) {
 
         // click handler
         let localFRef = buttonDetail.handler;
+        let subtoolName = buttonDetail.name;
         let wrappedHandler = function(e) {
             KiddoPaint.Sounds.submenuoption();
             localFRef(e);
+            // Update the subtool name in the status bar
+            KiddoPaint.Current.subtoolName = subtoolName;
+            if (typeof updateStatusBar === 'function') {
+                updateStatusBar();
+            }
         };
         button.onclick = wrappedHandler;
         button.oncontextmenu = wrappedHandler;
