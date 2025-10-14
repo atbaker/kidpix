@@ -1,22 +1,22 @@
 KiddoPaint.Submenu.circle = [{
         name: 'Texture 1',
         imgJs: function() {
-            return makeCircleIcon(KiddoPaint.Textures.None)
+            return makeCircleIcon(KiddoPaint.Textures.Solid)
         },
         handler: function() {
             KiddoPaint.Tools.Circle.texture = function() {
-                return KiddoPaint.Textures.None(KiddoPaint.Current.color);
+                return KiddoPaint.Textures.Solid(KiddoPaint.Current.color);
             }
         }
     },
     {
         name: 'Texture 1',
         imgJs: function() {
-            return makeCircleIcon(KiddoPaint.Textures.Solid)
+            return makeCircleIcon(KiddoPaint.Textures.None)
         },
         handler: function() {
             KiddoPaint.Tools.Circle.texture = function() {
-                return KiddoPaint.Textures.Solid(KiddoPaint.Current.color);
+                return KiddoPaint.Textures.None(KiddoPaint.Current.color);
             }
         }
     },

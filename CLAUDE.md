@@ -8,6 +8,15 @@ JSKidPix is an HTML5/JavaScript reimplementation of the classic 1989 Kid Pix dra
 
 **Live site**: https://kidpix.app/
 
+### Claude Draws Project
+
+This fork has been enhanced for the **Claude Draws** project, where Claude for Chrome creates original artworks based on requests from r/claudedraws. Key customizations include:
+
+- **Status Bar**: Real-time display of current tool, active modifiers, and a 5-minute countdown timer
+- **Programmatic Control**: On-screen toggle buttons (SHIFT, OPTION, CTRL) enable Claude to activate modifier keys programmatically
+- **Canvas Size**: Adjusted to 800x600 for optimal artwork generation
+- **Enhanced Accessibility**: Disabled image dragging and toolbar scrolling for reliable programmatic interaction
+
 ## Architecture
 
 ### Core Structure
@@ -76,15 +85,46 @@ Each tool can have a submenu (defined in `js/submenus/*.js`) with multiple varia
 - `KiddoPaint.Current.modified`, `modifiedMeta`, `modifiedCtrl`: Modifier key states
 - Undo system stores canvas snapshots in `KiddoPaint.Display.undoData`
 
+### Status Bar and Modifier Controls
+
+The status bar (bottom of the screen) displays real-time information:
+- **Current Tool**: Name of the active tool
+- **Active Modifiers**: Shows which modifier keys are active (SHIFT/OPTION/CTRL)
+- **Timer**: 5-minute countdown for the Claude Draws project
+
+Modifier toggle buttons allow programmatic control of modifier states:
+```javascript
+// Toggle modifiers programmatically by clicking the on-screen buttons
+document.getElementById('shiftToggle').click();   // Toggle SHIFT
+document.getElementById('optionToggle').click();  // Toggle OPTION
+document.getElementById('ctrlToggle').click();    // Toggle CTRL
+```
+
+These toggles update `KiddoPaint.Current.modified`, `modifiedMeta`, and `modifiedCtrl` just like physical keyboard keys, enabling Claude to activate tool variations programmatically.
+
 ### Sound System
 
 Sounds are pre-loaded Audio objects in `KiddoPaint.Sounds.Library` and played via helper functions (e.g., `KiddoPaint.Sounds.brushleakypen()`). The app includes hundreds of sound effects for tools, menus, and interactions.
 
 ## Development
 
+### Build System
+
+The project uses a build script (`build.sh`) to concatenate and format all JavaScript files:
+
+```bash
+./build.sh  # Formats code with js-beautify and builds js/app.js with uglify-es
+```
+
+The build script:
+1. Cleans the old `js/app.js`
+2. Formats all JS and CSS files using js-beautify
+3. Concatenates all modular JS files into a single `js/app.js` using uglify-es
+4. Adds a timestamp comment to the built file
+
 ### Running Locally
 
-This is a static site with no build process required:
+This is a static site - you can develop without building:
 
 1. Open `index.html` directly in a browser, or
 2. Use a local web server:
@@ -92,6 +132,19 @@ This is a static site with no build process required:
    python -m http.server 8000
    # Then visit http://localhost:8000
    ```
+
+For production deployment, run `./build.sh` to generate the optimized `js/app.js`.
+
+### Deployment
+
+Deployment to GitHub Pages is automated via GitHub Actions (`.github/workflows/deploy.yml`):
+
+1. Every push to `main` triggers the workflow
+2. Checks out the code and installs Node.js dependencies
+3. Runs `./build.sh` to generate `js/app.js`
+4. Deploys the entire site to GitHub Pages
+
+**No manual deployment is required** - just push to main and GitHub Actions handles the rest.
 
 ### Code Style
 

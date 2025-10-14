@@ -1,22 +1,22 @@
 KiddoPaint.Submenu.square = [{
         name: 'Texture 1',
         imgJs: function() {
-            return makeIcon(KiddoPaint.Textures.None)
+            return makeIcon(KiddoPaint.Textures.Solid)
         },
         handler: function() {
             KiddoPaint.Tools.Square.texture = function() {
-                return KiddoPaint.Textures.None(KiddoPaint.Current.color);
+                return KiddoPaint.Textures.Solid(KiddoPaint.Current.color);
             }
         }
     },
     {
         name: 'Texture 1',
         imgJs: function() {
-            return makeIcon(KiddoPaint.Textures.Solid)
+            return makeIcon(KiddoPaint.Textures.None)
         },
         handler: function() {
             KiddoPaint.Tools.Square.texture = function() {
-                return KiddoPaint.Textures.Solid(KiddoPaint.Current.color);
+                return KiddoPaint.Textures.None(KiddoPaint.Current.color);
             }
         }
     },

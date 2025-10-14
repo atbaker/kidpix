@@ -150,3 +150,124 @@ function getColorIndicesForCoord(x, y, width) {
     var red = y * (width * 4) + x * 4;
     return [red, red + 1, red + 2, red + 3];
 }
+
+// Convert RGB string to hex format
+KiddoPaint.Colors.rgbToHex = function(rgbString) {
+    // Parse rgb(r, g, b) or rgba(r, g, b, a) format
+    var match = rgbString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+    if (!match) {
+        // Try hex format already
+        if (rgbString.startsWith('#')) {
+            return rgbString.toUpperCase();
+        }
+        return '#000000';
+    }
+    var r = parseInt(match[1]);
+    var g = parseInt(match[2]);
+    var b = parseInt(match[3]);
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+}
+
+// Get human-readable color name from RGB string
+KiddoPaint.Colors.getColorName = function(rgbString) {
+    var hex = KiddoPaint.Colors.rgbToHex(rgbString);
+    var match = rgbString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+    if (!match) return 'color';
+
+    var r = parseInt(match[1]);
+    var g = parseInt(match[2]);
+    var b = parseInt(match[3]);
+
+    // Handle transparent/blank
+    if (rgbString.includes('rgba') && rgbString.includes(', 0)')) {
+        return 'transparent';
+    }
+
+    // Handle pure greys first
+    if (r === g && g === b) {
+        if (r === 0) return 'black';
+        if (r === 255) return 'white';
+        if (r < 64) return 'very dark grey';
+        if (r < 128) return 'dark grey';
+        if (r < 192) return 'grey';
+        if (r < 232) return 'light grey';
+        return 'very light grey';
+    }
+
+    // Determine dominant color channel(s)
+    var max = Math.max(r, g, b);
+    var min = Math.min(r, g, b);
+    var delta = max - min;
+
+    // Low saturation = greyish
+    var isGreyish = delta < 50;
+
+    // Determine brightness
+    var brightness = (r + g + b) / 3;
+    var prefix = '';
+    if (brightness < 85) {
+        prefix = 'very dark ';
+    } else if (brightness < 140) {
+        prefix = 'dark ';
+    } else if (brightness > 200) {
+        prefix = 'light ';
+    } else if (brightness > 230) {
+        prefix = 'very light ';
+    }
+
+    // Special case for brown (dark orange/yellow)
+    if (r > g && g > b && r < 160 && g < 120 && b < 80) {
+        if (brightness < 100) return 'dark brown';
+        if (brightness < 140) return 'brown';
+        return 'light brown';
+    }
+
+    // Determine base hue
+    var hue = '';
+
+    // Check for secondary colors first (mix of two primaries)
+    if (r > 200 && g > 200 && b < 100) {
+        hue = 'yellow';
+    } else if (r > 200 && b > 200 && g < 100) {
+        hue = 'magenta';
+    } else if (g > 200 && b > 200 && r < 100) {
+        hue = 'cyan';
+    } else if (r > g + 50 && r > b + 50 && g > 100 && b < g - 50) {
+        hue = 'orange';
+    } else if (r > 150 && g > 50 && g < 150 && b > 150) {
+        hue = 'purple';
+    } else if (r > 150 && g < 100 && b > 100 && b < r) {
+        hue = 'pink';
+    } else if (r > g && r > b) {
+        // Red dominant
+        if (g > b + 30) {
+            hue = 'orange';
+        } else if (b > g + 30) {
+            hue = 'pink';
+        } else {
+            hue = 'red';
+        }
+    } else if (g > r && g > b) {
+        // Green dominant
+        if (r > b + 30) {
+            hue = 'yellow-green';
+        } else if (b > r + 30) {
+            hue = 'cyan';
+        } else {
+            hue = 'green';
+        }
+    } else if (b > r && b > g) {
+        // Blue dominant
+        if (r > g + 30) {
+            hue = 'purple';
+        } else if (g > r + 30) {
+            hue = 'cyan';
+        } else {
+            hue = 'blue';
+        }
+    } else {
+        hue = 'grey';
+    }
+
+    return prefix + hue;
+}

@@ -374,6 +374,14 @@ function set_colors_to_current_palette() {
         var buttonid = button.id;
         var color = pal[buttonid];
         button.style = "background-color:" + color;
+
+        // Add accessibility attributes
+        var colorName = KiddoPaint.Colors.getColorName(color);
+        var colorHex = KiddoPaint.Colors.rgbToHex(color);
+        button.setAttribute('data-color-name', colorName);
+        button.setAttribute('data-color-hex', colorHex);
+        button.setAttribute('aria-label', colorName + ' (' + colorHex + ')');
+        button.setAttribute('title', colorName + ' (' + colorHex + ')');
     }
 }
 
