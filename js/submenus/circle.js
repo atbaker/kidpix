@@ -1,5 +1,5 @@
 KiddoPaint.Submenu.circle = [{
-        name: 'Texture 1',
+        name: 'Filled Circle',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Solid)
         },
@@ -10,7 +10,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 1',
+        name: 'Outlined Circle',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.None)
         },
@@ -21,7 +21,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 2',
+        name: 'Sparse Dots',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Partial1);
         },
@@ -32,7 +32,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 3',
+        name: 'Medium Dots',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Partial2);
         },
@@ -43,7 +43,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 4',
+        name: 'Dense Dots',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Partial3);
         },
@@ -54,7 +54,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 6',
+        name: 'Artifact Pattern',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.PartialArtifactAlias);
         },
@@ -65,7 +65,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 7',
+        name: 'Speckles',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Speckles);
         },
@@ -76,7 +76,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 7',
+        name: 'Stripes',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Stripes);
         },
@@ -87,7 +87,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 7',
+        name: 'Thatch',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Thatch);
         },
@@ -98,7 +98,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 7',
+        name: 'Shingles',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Shingles);
         },
@@ -109,7 +109,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 8',
+        name: 'Bubbles',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Bubbles);
         },
@@ -120,7 +120,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 9',
+        name: 'Diamond',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Diamond);
         },
@@ -131,7 +131,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 9',
+        name: 'Ribbon',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Ribbon);
         },
@@ -142,7 +142,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 10',
+        name: 'Sand',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Sand);
         },
@@ -153,7 +153,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 11',
+        name: 'Brick',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Brick);
         },
@@ -164,7 +164,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 11',
+        name: 'Chevron',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Chevron);
         },
@@ -175,7 +175,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 11',
+        name: 'Stairs',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Stairs);
         },
@@ -186,7 +186,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 11',
+        name: 'Cross',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Cross);
         },
@@ -197,7 +197,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 11',
+        name: 'Diagonal Brick',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.DiagBrick);
         },
@@ -208,7 +208,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 12',
+        name: 'Corner Stair',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.CornerStair);
         },
@@ -219,7 +219,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture 13',
+        name: 'Houndstooth',
         imgJs: function() {
             return makeCircleIcon(KiddoPaint.Textures.Houndstooth)
         },
@@ -230,7 +230,7 @@ KiddoPaint.Submenu.circle = [{
         }
     },
     {
-        name: 'Texture ?',
+        name: 'Rainbow Gradient',
         imgSrc: 'img/tool-unknown.png',
         handler: function() {
             KiddoPaint.Tools.Circle.texture = function(start, end) {
