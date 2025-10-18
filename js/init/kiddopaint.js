@@ -55,7 +55,7 @@ function updateStatusBar() {
     // Update color
     var colorElement = document.getElementById('current-color');
     if (colorElement && KiddoPaint.Current.color) {
-        colorElement.textContent = KiddoPaint.Current.color.toUpperCase();
+        colorElement.textContent = KiddoPaint.Colors.rgbToHex(KiddoPaint.Current.color);
     }
 
     // Update modifiers
@@ -487,7 +487,7 @@ function init_tool_bar() {
         KiddoPaint.Display.canvas.classList.add('cursor-pencil');
         set_active_tool('pencil');
         show_generic_submenu('pencil');
-        invokeDefaultSubtool('pencil');
+        invokeDefaultSubtool('pencil', 2);
     });
 
     document.getElementById('line').addEventListener('mousedown', function() {
@@ -497,7 +497,7 @@ function init_tool_bar() {
         KiddoPaint.Display.canvas.classList.add('cursor-crosshair');
         set_active_tool('line');
         show_generic_submenu('line');
-        invokeDefaultSubtool('line');
+        invokeDefaultSubtool('line', 2);
     });
 
     document.getElementById('square').addEventListener('mousedown', function() {
@@ -636,7 +636,7 @@ function init_pencil_subtoolbar() {
     KiddoPaint.Display.canvas.classList.add('cursor-pencil');
     set_active_tool('pencil');
     show_generic_submenu('pencil');
-    invokeDefaultSubtool('pencil');
+    invokeDefaultSubtool('pencil', 2);
 }
 
 function init_alphabet_subtoolbar() {
