@@ -7,12 +7,12 @@ KiddoPaint.Tools.Toolbox.Stamp = function() {
     this.seed = 1;
     this.texture = function() {
         var altSize = KiddoPaint.Cache.getStampSettings(tool.stamp).altSize;
+        var effectiveAltSize = altSize;
         if (KiddoPaint.Current.modifiedRange !== 0) {
-            var modifiedSize = KiddoPaint.Current.modifiedRange + 112;
-            KiddoPaint.Cache.setStampSetting(tool.stamp, 'altSize', modifiedSize);
-            altSize = modifiedSize;
+            // Use modifiedRange as a temporary size adjustment without persisting to cache
+            effectiveAltSize = KiddoPaint.Current.modifiedRange + 112;
         }
-        tool.size = KiddoPaint.Current.modified ? altSize : 64;
+        tool.size = KiddoPaint.Current.modified ? effectiveAltSize : 64;
 
         var hueShift = KiddoPaint.Cache.getStampSettings(tool.stamp).hueShift;
         if (KiddoPaint.Current.modifiedCtrlRange !== 0) {
