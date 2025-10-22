@@ -18,6 +18,7 @@ echo -n [build] Building JS Kid Pix app.js..
 node_modules/uglify-es/bin/uglifyjs -bo js/app.js \
   js/init/* \
   js/util/* \
+  js/data/* \
   js/tools/* \
   js/textures/* \
   js/submenus/* \

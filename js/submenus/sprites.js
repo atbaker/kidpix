@@ -57,8 +57,18 @@ function init_sprites_submenu() {
 
     for (let j = 0; j < maxcols; j++) {
         let spriteNumber = row * maxcols + j + 1;
+
+        // Get label from sprite labels data structure, with fallback
+        let spriteName = 'Sprite ' + spriteNumber; // Default fallback
+        if (KiddoPaint.Sprite.labels &&
+            KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage] &&
+            KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage][row] &&
+            KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage][row][j]) {
+            spriteName = KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage][row][j];
+        }
+
         let individualSprite = {
-            name: 'Sprite ' + spriteNumber,
+            name: spriteName,
             spriteSheet: sheet,
             spriteRow: row,
             spriteCol: j,
