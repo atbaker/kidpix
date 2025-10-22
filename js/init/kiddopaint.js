@@ -52,10 +52,18 @@ function updateStatusBar() {
         subtoolNameElement.textContent = KiddoPaint.Current.subtoolName || '(none)';
     }
 
-    // Update color
+    // Update color (hide for stamp tool)
     var colorElement = document.getElementById('current-color');
+    var colorSeparator = document.getElementById('color-separator');
+    var isStampTool = KiddoPaint.Current.toolName === 'Rubber Stamps';
+
     if (colorElement && KiddoPaint.Current.color) {
         colorElement.textContent = KiddoPaint.Colors.rgbToHex(KiddoPaint.Current.color);
+        colorElement.style.display = isStampTool ? 'none' : 'inline';
+    }
+
+    if (colorSeparator) {
+        colorSeparator.style.display = isStampTool ? 'none' : 'inline';
     }
 
     // Update modifiers
@@ -554,6 +562,12 @@ function init_tool_bar() {
         KiddoPaint.Display.canvas.classList = "";
         KiddoPaint.Display.canvas.classList.add('cursor-none');
         set_active_tool('alphabet');
+        // Set initial subtool to first letter of current page
+        var alphabetgroup = KiddoPaint.Alphabet.english['character' + KiddoPaint.Alphabet.page];
+        if (alphabetgroup && alphabetgroup.letters && alphabetgroup.letters.length > 0) {
+            KiddoPaint.Current.subtoolName = alphabetgroup.letters[0];
+            updateStatusBar();
+        }
     });
 
     document.getElementById('flood').addEventListener('mousedown', function() {
@@ -596,6 +610,12 @@ function init_tool_bar() {
         KiddoPaint.Sounds.submenuoption();
         KiddoPaint.Alphabet.nextPage();
         init_alphabet_bar('character' + KiddoPaint.Alphabet.page);
+        // Update subtool to first letter of new page
+        var alphabetgroup = KiddoPaint.Alphabet.english['character' + KiddoPaint.Alphabet.page];
+        if (alphabetgroup && alphabetgroup.letters && alphabetgroup.letters.length > 0) {
+            KiddoPaint.Current.subtoolName = alphabetgroup.letters[0];
+            updateStatusBar();
+        }
     });
 
     //    document.getElementById('stnext').addEventListener('mousedown', function(e) {
@@ -647,6 +667,9 @@ function init_alphabet_subtoolbar() {
             reset_ranges();
             src = ev.srcElement || ev.target;
             KiddoPaint.Tools.Stamp.stamp = src.firstChild.nodeValue;
+            // Update subtool name for status bar
+            KiddoPaint.Current.subtoolName = src.firstChild.nodeValue;
+            updateStatusBar();
             KiddoPaint.Sounds.Library.playKey(KiddoPaint.Tools.Stamp.stamp);
         });
     }
