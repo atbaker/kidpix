@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidPix Sprite Reference - Labeling Guide</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        .instructions {
+            background: #34495e;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .instructions code {
+            background: #2c3e50;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #e74c3c;
+        }
+        .sheet-container {
+            background: #34495e;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 1200px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .sheet-header {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 8px 8px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .sheet-header .filename {
+            font-family: monospace;
+            font-size: 14px;
+            opacity: 0.9;
+            display: block;
+            margin-top: 4px;
+        }
+        .grid-container {
+            display: inline-block;
+            background: #ecf0f1;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 40px repeat(14, 64px);
+            grid-template-rows: 40px repeat(7, 64px);
+            gap: 1px;
+            background: #95a5a6;
+        }
+        .grid-cell {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .header-cell {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .sprite-cell {
+            cursor: help;
+            position: relative;
+        }
+        .sprite-cell:hover {
+            background: #fff9e6;
+            outline: 3px solid #f39c12;
+            z-index: 10;
+        }
+        .sprite-cell img {
+            width: 64px;
+            height: 64px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        .coord-label {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 9px;
+            padding: 2px 4px;
+            border-radius: 2px;
+            pointer-events: none;
+            font-family: monospace;
+        }
+        .sprite-cell:hover .coord-label {
+            background: rgba(243, 156, 18, 0.9);
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .json-path {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 8px 12px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border-left: 4px solid #2ecc71;
+        }
+        .copy-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-family: monospace;
+        }
+        .copy-btn:hover {
+            background: #229954;
+        }
+        .stats {
+            text-align: center;
+            margin: 20px auto;
+            padding: 15px;
+            background: #34495e;
+            border-radius: 5px;
+            max-width: 600px;
+        }
+        .stats strong {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 KidPix Sprite Labeling Reference</h1>
+
+    <div class="instructions">
+        <h3>How to Use This Reference:</h3>
+        <ol>
+            <li>Open <code>scripts/sprite-labels-template.json</code> in your text editor</li>
+            <li>Hover over any sprite below to see its coordinates</li>
+            <li>The coordinates show: <code>[Sheet, Row, Col]</code></li>
+            <li>In the JSON, find the matching sheet number, row, and column index</li>
+            <li>Replace <code>"TODO"</code> with a descriptive label like <code>"palm tree"</code></li>
+            <li>Keep labels short, lowercase, and descriptive (Claude will see these!)</li>
+        </ol>
+        <p><strong>Example:</strong> If you hover over a sprite and see <code>[0, 0, 2]</code>, edit:<br>
+        <code>"0" → "0" → ["TODO", "TODO", <span style="color: #2ecc71;">"your label here"</span>, ...]</code></p>
+    </div>
+
+    <div class="stats">
+        <strong>Total Sprites:</strong> 980 (10 sheets × 7 rows × 14 columns)<br>
+        <strong>Progress:</strong> Check for remaining "TODO" entries in your JSON file
+    </div>
+
+    <div id="sheets-container"></div>
+
+    <script>
+        const SPRITE_SIZE = 32;
+        const COLS = 14;
+        const ROWS = 7;
+        const SHEETS = [
+            { index: 0, path: '../img/kidpix-spritesheet-0.png', name: 'kidpix-spritesheet-0.png' },
+            { index: 1, path: '../img/kidpix-spritesheet-0b.png', name: 'kidpix-spritesheet-0b.png' },
+            { index: 2, path: '../img/kidpix-spritesheet-1.png', name: 'kidpix-spritesheet-1.png' },
+            { index: 3, path: '../img/kidpix-spritesheet-2.png', name: 'kidpix-spritesheet-2.png' },
+            { index: 4, path: '../img/kidpix-spritesheet-3.png', name: 'kidpix-spritesheet-3.png' },
+            { index: 5, path: '../img/kidpix-spritesheet-4.png', name: 'kidpix-spritesheet-4.png' },
+            { index: 6, path: '../img/kidpix-spritesheet-5.png', name: 'kidpix-spritesheet-5.png' },
+            { index: 7, path: '../img/kidpix-spritesheet-6.png', name: 'kidpix-spritesheet-6.png' },
+            { index: 8, path: '../img/kidpix-spritesheet-7.png', name: 'kidpix-spritesheet-7.png' },
+            { index: 9, path: '../img/kidpix-spritesheet-8.png', name: 'kidpix-spritesheet-8.png' }
+        ];
+
+        function extractSprite(img, size, col, row) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+
+            const sourceX = col * size;
+            const sourceY = row * size;
+            ctx.drawImage(img, sourceX, sourceY, size, size, 0, 0, size, size);
+
+            return canvas.toDataURL('image/png');
+        }
+
+        async function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        async function renderSheet(sheetInfo) {
+            const img = await loadImage(sheetInfo.path);
+
+            const container = document.createElement('div');
+            container.className = 'sheet-container';
+            container.id = `sheet-${sheetInfo.index}`;
+
+            const header = document.createElement('div');
+            header.className = 'sheet-header';
+            header.innerHTML = `
+                Sheet ${sheetInfo.index}
+                <span class="filename">${sheetInfo.name}</span>
+            `;
+            container.appendChild(header);
+
+            const gridContainer = document.createElement('div');
+            gridContainer.className = 'grid-container';
+
+            const grid = document.createElement('div');
+            grid.className = 'grid';
+
+            // Top-left corner cell
+            const cornerCell = document.createElement('div');
+            cornerCell.className = 'grid-cell header-cell';
+            cornerCell.textContent = '↓R→C';
+            grid.appendChild(cornerCell);
+
+            // Column headers
+            for (let col = 0; col < COLS; col++) {
+                const headerCell = document.createElement('div');
+                headerCell.className = 'grid-cell header-cell';
+                headerCell.textContent = col;
+                grid.appendChild(headerCell);
+            }
+
+            // Rows with row header and sprites
+            for (let row = 0; row < ROWS; row++) {
+                // Row header
+                const rowHeaderCell = document.createElement('div');
+                rowHeaderCell.className = 'grid-cell header-cell';
+                rowHeaderCell.textContent = row;
+                grid.appendChild(rowHeaderCell);
+
+                // Sprite cells
+                for (let col = 0; col < COLS; col++) {
+                    const spriteCell = document.createElement('div');
+                    spriteCell.className = 'grid-cell sprite-cell';
+
+                    const spriteDataURL = extractSprite(img, SPRITE_SIZE, col, row);
+                    const spriteImg = document.createElement('img');
+                    spriteImg.src = spriteDataURL;
+                    spriteImg.alt = `Sprite [${sheetInfo.index}, ${row}, ${col}]`;
+
+                    const coordLabel = document.createElement('div');
+                    coordLabel.className = 'coord-label';
+                    coordLabel.textContent = `[${sheetInfo.index},${row},${col}]`;
+
+                    spriteCell.appendChild(spriteImg);
+                    spriteCell.appendChild(coordLabel);
+                    spriteCell.title = `Sheet ${sheetInfo.index}, Row ${row}, Col ${col}\nJSON path: "${sheetInfo.index}" → "${row}" → [${col}]`;
+
+                    grid.appendChild(spriteCell);
+                }
+            }
+
+            gridContainer.appendChild(grid);
+            container.appendChild(gridContainer);
+
+            const jsonPath = document.createElement('div');
+            jsonPath.className = 'json-path';
+            jsonPath.innerHTML = `JSON path: <code>"${sheetInfo.index}"</code> → <code>"0"</code>-<code>"6"</code> → <code>[0-13]</code>`;
+            container.appendChild(jsonPath);
+
+            return container;
+        }
+
+        async function renderAllSheets() {
+            const sheetsContainer = document.getElementById('sheets-container');
+
+            for (const sheet of SHEETS) {
+                const sheetElement = await renderSheet(sheet);
+                sheetsContainer.appendChild(sheetElement);
+            }
+        }
+
+        // Load all sheets on page load
+        renderAllSheets();
+    </script>
+</body>
+</html>

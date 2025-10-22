@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Sprite Labeler</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .progress-section {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .sprite-display {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .sprite-container {
+            display: inline-block;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border: 3px solid #667eea;
+        }
+
+        .sprite-image {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            width: 128px;
+            height: 128px;
+            display: block;
+        }
+
+        .sprite-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .sprite-position {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .input-section {
+            margin: 30px 0;
+        }
+
+        .input-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .input-section input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .input-section input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .recent-labels {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .recent-label {
+            padding: 6px 12px;
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .recent-label:hover {
+            background: #90caf9;
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .shortcuts {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .shortcuts h3 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .shortcuts ul {
+            list-style: none;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .shortcuts kbd {
+            background: #333;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .session-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .session-controls input[type="file"] {
+            display: none;
+        }
+
+        .status-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .jump-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .jump-controls input {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .labeled-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .labeled-yes {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .labeled-no {
+            background: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Interactive Sprite Labeler</h1>
+            <p>Label 980 KidPix sprites quickly and easily</p>
+        </div>
+
+        <div class="card">
+            <div class="session-controls">
+                <button class="btn-secondary btn-small" onclick="loadExistingJSON()">
+                    📂 Load Existing JSON
+                </button>
+                <input type="file" id="fileInput" accept=".json" onchange="handleFileLoad(event)">
+                <button class="btn-success btn-small" onclick="exportJSON()">
+                    💾 Download JSON
+                </button>
+                <button class="btn-secondary btn-small" onclick="copyJSON()">
+                    📋 Copy JSON
+                </button>
+                <button class="btn-secondary btn-small" onclick="resetProgress()">
+                    🔄 Reset All
+                </button>
+            </div>
+
+            <div class="status-message" id="statusMessage"></div>
+
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div class="progress-text" id="progressText">0 of 980 sprites labeled (0%)</div>
+            </div>
+
+            <div class="sprite-display">
+                <div class="sprite-container">
+                    <img id="spriteImage" class="sprite-image" src="" alt="Current sprite">
+                </div>
+                <div class="sprite-info">
+                    <div class="sprite-position" id="spritePosition">Sheet 0, Row 0, Col 0</div>
+                    <div id="spriteNumber">Sprite 1 of 980</div>
+                    <span id="labeledStatus" class="labeled-indicator labeled-no">Unlabeled</span>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <label for="labelInput">
+                    Enter sprite label:
+                </label>
+                <input
+                    type="text"
+                    id="labelInput"
+                    placeholder="e.g., palm tree, rocket ship, elephant..."
+                    autofocus
+                    autocomplete="off"
+                >
+                <div class="recent-labels" id="recentLabels"></div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="submitLabel()">
+                    ✓ Save & Next (Enter)
+                </button>
+                <button class="btn-secondary" onclick="previousSprite()">
+                    ← Previous
+                </button>
+                <button class="btn-secondary" onclick="nextSprite()">
+                    Next →
+                </button>
+                <button class="btn-secondary" onclick="skipToNextUnlabeled()">
+                    Skip to Next Unlabeled
+                </button>
+            </div>
+
+            <div class="jump-controls">
+                <span>Jump to:</span>
+                <input type="number" id="jumpSheet" placeholder="Sheet" min="0" max="9">
+                <input type="number" id="jumpRow" placeholder="Row" min="0" max="6">
+                <input type="number" id="jumpCol" placeholder="Col" min="0" max="13">
+                <button class="btn-secondary btn-small" onclick="jumpToPosition()">Go</button>
+            </div>
+
+            <div class="shortcuts">
+                <h3>⌨️ Keyboard Shortcuts</h3>
+                <ul>
+                    <li><kbd>Enter</kbd> - Save label and move to next sprite</li>
+                    <li><kbd>Alt</kbd> + <kbd>←</kbd> - Previous sprite</li>
+                    <li><kbd>Alt</kbd> + <kbd>→</kbd> - Next sprite (without saving)</li>
+                    <li><kbd>Ctrl</kbd> + <kbd>S</kbd> - Copy JSON to clipboard</li>
+                    <li><kbd>Ctrl</kbd> + <kbd>N</kbd> - Skip to next unlabeled</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const SPRITE_SIZE = 32;
+        const COLS = 14;
+        const ROWS = 7;
+        const SHEETS = [
+            '../img/kidpix-spritesheet-0.png',
+            '../img/kidpix-spritesheet-0b.png',
+            '../img/kidpix-spritesheet-1.png',
+            '../img/kidpix-spritesheet-2.png',
+            '../img/kidpix-spritesheet-3.png',
+            '../img/kidpix-spritesheet-4.png',
+            '../img/kidpix-spritesheet-5.png',
+            '../img/kidpix-spritesheet-6.png',
+            '../img/kidpix-spritesheet-7.png',
+            '../img/kidpix-spritesheet-8.png',
+        ];
+
+        // State
+        let currentSheet = 0;
+        let currentRow = 0;
+        let currentCol = 0;
+        let labels = {};
+        let loadedImages = {};
+        let recentLabels = [];
+        const MAX_RECENT = 10;
+
+        // Initialize labels structure
+        function initializeLabels() {
+            for (let s = 0; s < SHEETS.length; s++) {
+                labels[s] = {};
+                for (let r = 0; r < ROWS; r++) {
+                    labels[s][r] = new Array(COLS).fill(null);
+                }
+            }
+        }
+
+        // Load sprite sheet images
+        async function loadImages() {
+            for (let i = 0; i < SHEETS.length; i++) {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = SHEETS[i];
+                });
+                loadedImages[i] = img;
+            }
+        }
+
+        // Extract sprite from sheet
+        function extractSprite(sheetIndex, col, row) {
+            const img = loadedImages[sheetIndex];
+            if (!img) return null;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = SPRITE_SIZE;
+            canvas.height = SPRITE_SIZE;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+
+            const sourceX = col * SPRITE_SIZE;
+            const sourceY = row * SPRITE_SIZE;
+            ctx.drawImage(img, sourceX, sourceY, SPRITE_SIZE, SPRITE_SIZE, 0, 0, SPRITE_SIZE, SPRITE_SIZE);
+
+            return canvas.toDataURL('image/png');
+        }
+
+        // Display current sprite
+        function displaySprite() {
+            const spriteData = extractSprite(currentSheet, currentCol, currentRow);
+            document.getElementById('spriteImage').src = spriteData;
+
+            const position = `Sheet ${currentSheet}, Row ${currentRow}, Col ${currentCol}`;
+            document.getElementById('spritePosition').textContent = position;
+
+            const spriteNum = (currentSheet * ROWS * COLS) + (currentRow * COLS) + currentCol + 1;
+            document.getElementById('spriteNumber').textContent = `Sprite ${spriteNum} of 980`;
+
+            // Update label input
+            const currentLabel = labels[currentSheet][currentRow][currentCol];
+            document.getElementById('labelInput').value = currentLabel || '';
+
+            // Update labeled status
+            const statusEl = document.getElementById('labeledStatus');
+            if (currentLabel) {
+                statusEl.className = 'labeled-indicator labeled-yes';
+                statusEl.textContent = '✓ Labeled';
+            } else {
+                statusEl.className = 'labeled-indicator labeled-no';
+                statusEl.textContent = 'Unlabeled';
+            }
+
+            document.getElementById('labelInput').focus();
+            updateProgress();
+            saveToLocalStorage();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            let labeled = 0;
+            const total = SHEETS.length * ROWS * COLS;
+
+            for (let s = 0; s < SHEETS.length; s++) {
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (labels[s][r][c]) labeled++;
+                    }
+                }
+            }
+
+            const percent = Math.round((labeled / total) * 100);
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressFill').textContent = percent + '%';
+            document.getElementById('progressText').textContent =
+                `${labeled} of ${total} sprites labeled (${percent}%)`;
+        }
+
+        // Submit label
+        function submitLabel() {
+            const label = document.getElementById('labelInput').value.trim();
+
+            if (label) {
+                labels[currentSheet][currentRow][currentCol] = label;
+
+                // Add to recent labels
+                if (!recentLabels.includes(label)) {
+                    recentLabels.unshift(label);
+                    if (recentLabels.length > MAX_RECENT) {
+                        recentLabels.pop();
+                    }
+                    updateRecentLabels();
+                }
+
+                showStatus('Label saved!', 'success');
+            }
+
+            nextSprite();
+        }
+
+        // Navigation
+        function nextSprite() {
+            currentCol++;
+            if (currentCol >= COLS) {
+                currentCol = 0;
+                currentRow++;
+                if (currentRow >= ROWS) {
+                    currentRow = 0;
+                    currentSheet++;
+                    if (currentSheet >= SHEETS.length) {
+                        currentSheet = 0;
+                    }
+                }
+            }
+            displaySprite();
+        }
+
+        function previousSprite() {
+            currentCol--;
+            if (currentCol < 0) {
+                currentCol = COLS - 1;
+                currentRow--;
+                if (currentRow < 0) {
+                    currentRow = ROWS - 1;
+                    currentSheet--;
+                    if (currentSheet < 0) {
+                        currentSheet = SHEETS.length - 1;
+                    }
+                }
+            }
+            displaySprite();
+        }
+
+        function skipToNextUnlabeled() {
+            const startSheet = currentSheet;
+            const startRow = currentRow;
+            const startCol = currentCol;
+
+            do {
+                nextSprite();
+                if (!labels[currentSheet][currentRow][currentCol]) {
+                    showStatus('Jumped to next unlabeled sprite', 'info');
+                    return;
+                }
+            } while (currentSheet !== startSheet || currentRow !== startRow || currentCol !== startCol);
+
+            showStatus('All sprites are labeled!', 'success');
+        }
+
+        function jumpToPosition() {
+            const sheet = parseInt(document.getElementById('jumpSheet').value);
+            const row = parseInt(document.getElementById('jumpRow').value);
+            const col = parseInt(document.getElementById('jumpCol').value);
+
+            if (sheet >= 0 && sheet < SHEETS.length &&
+                row >= 0 && row < ROWS &&
+                col >= 0 && col < COLS) {
+                currentSheet = sheet;
+                currentRow = row;
+                currentCol = col;
+                displaySprite();
+                showStatus(`Jumped to Sheet ${sheet}, Row ${row}, Col ${col}`, 'info');
+            } else {
+                showStatus('Invalid position', 'info');
+            }
+        }
+
+        // Recent labels
+        function updateRecentLabels() {
+            const container = document.getElementById('recentLabels');
+            container.innerHTML = '';
+
+            if (recentLabels.length > 0) {
+                const label = document.createElement('div');
+                label.textContent = 'Recent: ';
+                label.style.fontSize = '13px';
+                label.style.color = '#666';
+                label.style.marginRight = '10px';
+                container.appendChild(label);
+            }
+
+            recentLabels.forEach(recentLabel => {
+                const span = document.createElement('span');
+                span.className = 'recent-label';
+                span.textContent = recentLabel;
+                span.onclick = () => {
+                    document.getElementById('labelInput').value = recentLabel;
+                    document.getElementById('labelInput').focus();
+                };
+                container.appendChild(span);
+            });
+        }
+
+        // Export/Import
+        function copyJSON() {
+            const json = generateJSON();
+            navigator.clipboard.writeText(json).then(() => {
+                showStatus('JSON copied to clipboard!', 'success');
+            }).catch(err => {
+                showStatus('Failed to copy: ' + err, 'info');
+            });
+        }
+
+        function exportJSON() {
+            const json = generateJSON();
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sprite-labels.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showStatus('JSON file downloaded!', 'success');
+        }
+
+        function generateJSON() {
+            const output = {};
+
+            for (let s = 0; s < SHEETS.length; s++) {
+                output[s] = {};
+                for (let r = 0; r < ROWS; r++) {
+                    output[s][r] = labels[s][r].map(label => label || 'TODO');
+                }
+            }
+
+            return JSON.stringify(output, null, 2);
+        }
+
+        function loadExistingJSON() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    // Import labels
+                    for (let s = 0; s < SHEETS.length; s++) {
+                        if (data[s]) {
+                            for (let r = 0; r < ROWS; r++) {
+                                if (data[s][r]) {
+                                    labels[s][r] = data[s][r].map(label =>
+                                        (label === 'TODO' || label === 'unlabeled sprite') ? null : label
+                                    );
+                                }
+                            }
+                        }
+                    }
+
+                    displaySprite();
+                    showStatus('JSON loaded successfully!', 'success');
+                } catch (err) {
+                    showStatus('Error loading JSON: ' + err, 'info');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Local storage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('kidpix-sprite-labels', JSON.stringify(labels));
+                localStorage.setItem('kidpix-current-position', JSON.stringify({
+                    sheet: currentSheet,
+                    row: currentRow,
+                    col: currentCol
+                }));
+                localStorage.setItem('kidpix-recent-labels', JSON.stringify(recentLabels));
+            } catch (e) {
+                console.error('Failed to save to localStorage:', e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedLabels = localStorage.getItem('kidpix-sprite-labels');
+                if (savedLabels) {
+                    labels = JSON.parse(savedLabels);
+                    showStatus('Resumed from previous session', 'info');
+                }
+
+                const savedPosition = localStorage.getItem('kidpix-current-position');
+                if (savedPosition) {
+                    const pos = JSON.parse(savedPosition);
+                    currentSheet = pos.sheet;
+                    currentRow = pos.row;
+                    currentCol = pos.col;
+                }
+
+                const savedRecent = localStorage.getItem('kidpix-recent-labels');
+                if (savedRecent) {
+                    recentLabels = JSON.parse(savedRecent);
+                    updateRecentLabels();
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+            }
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure? This will erase all labels!')) {
+                localStorage.clear();
+                initializeLabels();
+                currentSheet = 0;
+                currentRow = 0;
+                currentCol = 0;
+                recentLabels = [];
+                updateRecentLabels();
+                displaySprite();
+                showStatus('Progress reset', 'info');
+            }
+        }
+
+        // Status messages
+        function showStatus(message, type) {
+            const el = document.getElementById('statusMessage');
+            el.textContent = message;
+            el.className = 'status-message status-' + type;
+            el.style.display = 'block';
+
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.target.id === 'labelInput') {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitLabel();
+                }
+            } else {
+                if (e.altKey && e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    previousSprite();
+                } else if (e.altKey && e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    nextSprite();
+                } else if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    copyJSON();
+                } else if (e.ctrlKey && e.key === 'n') {
+                    e.preventDefault();
+                    skipToNextUnlabeled();
+                }
+            }
+        });
+
+        // Initialize
+        initializeLabels();
+        loadFromLocalStorage();
+        loadImages().then(() => {
+            displaySprite();
+        });
+    </script>
+</body>
+</html>

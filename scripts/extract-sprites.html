@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Extractor</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .sprite-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 20px 0;
+            background: white;
+            padding: 10px;
+            border: 2px solid #333;
+        }
+        .sprite {
+            border: 1px solid #ccc;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        h2 {
+            margin-top: 30px;
+            font-family: sans-serif;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+        }
+        #output {
+            background: white;
+            padding: 20px;
+            border: 2px solid #333;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .sheet-header {
+            background: #333;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .progress {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>KidPix Sprite Extractor</h1>
+    <p>This tool extracts individual sprites from the KidPix sprite sheets for labeling.</p>
+
+    <button onclick="extractAllSprites()">Extract All Sprites</button>
+    <button onclick="downloadJSON()">Download as JSON</button>
+    <button onclick="copyToClipboard()">Copy JSON to Clipboard</button>
+
+    <div id="progress"></div>
+    <div id="sprites-display"></div>
+    <div id="output"></div>
+
+    <script>
+        // Sprite configuration
+        const SPRITE_SIZE = 32;
+        const COLS = 14;
+        const ROWS = 7;
+        const SHEETS = [
+            '../img/kidpix-spritesheet-0.png',
+            '../img/kidpix-spritesheet-0b.png',
+            '../img/kidpix-spritesheet-1.png',
+            '../img/kidpix-spritesheet-2.png',
+            '../img/kidpix-spritesheet-3.png',
+            '../img/kidpix-spritesheet-4.png',
+            '../img/kidpix-spritesheet-5.png',
+            '../img/kidpix-spritesheet-6.png',
+            '../img/kidpix-spritesheet-7.png',
+            '../img/kidpix-spritesheet-8.png',
+        ];
+
+        let extractedSprites = {};
+
+        function extractSprite(img, size, col, row, offset = 0) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+
+            const sourceX = offset + (col * size);
+            const sourceY = offset + (row * size);
+            ctx.drawImage(img, sourceX, sourceY, size, size, 0, 0, size, size);
+
+            return canvas;
+        }
+
+        async function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        async function extractAllSprites() {
+            const displayDiv = document.getElementById('sprites-display');
+            const progressDiv = document.getElementById('progress');
+            displayDiv.innerHTML = '';
+            extractedSprites = {};
+
+            for (let sheetIndex = 0; sheetIndex < SHEETS.length; sheetIndex++) {
+                const sheetPath = SHEETS[sheetIndex];
+                progressDiv.innerHTML = `Loading sheet ${sheetIndex + 1} of ${SHEETS.length}: ${sheetPath}`;
+
+                const img = await loadImage(sheetPath);
+
+                // Create sheet container
+                const sheetDiv = document.createElement('div');
+                sheetDiv.innerHTML = `<div class="sheet-header">Sheet ${sheetIndex}: ${sheetPath.split('/').pop()}</div>`;
+                displayDiv.appendChild(sheetDiv);
+
+                const containerDiv = document.createElement('div');
+                containerDiv.className = 'sprite-container';
+                displayDiv.appendChild(containerDiv);
+
+                extractedSprites[sheetIndex] = {};
+
+                for (let row = 0; row < ROWS; row++) {
+                    extractedSprites[sheetIndex][row] = [];
+
+                    for (let col = 0; col < COLS; col++) {
+                        const spriteCanvas = extractSprite(img, SPRITE_SIZE, col, row);
+                        const dataURL = spriteCanvas.toDataURL('image/png');
+
+                        // Store the data URL
+                        extractedSprites[sheetIndex][row].push({
+                            dataURL: dataURL,
+                            col: col,
+                            row: row,
+                            label: null  // To be filled in by AI
+                        });
+
+                        // Display sprite
+                        const spriteImg = document.createElement('img');
+                        spriteImg.src = dataURL;
+                        spriteImg.className = 'sprite';
+                        spriteImg.width = SPRITE_SIZE * 2;  // Scale up for visibility
+                        spriteImg.height = SPRITE_SIZE * 2;
+                        spriteImg.title = `Sheet ${sheetIndex}, Row ${row}, Col ${col}`;
+                        containerDiv.appendChild(spriteImg);
+                    }
+                }
+            }
+
+            progressDiv.innerHTML = `✓ Extracted ${SHEETS.length} sheets × ${ROWS} rows × ${COLS} cols = ${SHEETS.length * ROWS * COLS} sprites`;
+
+            // Display summary
+            const output = document.getElementById('output');
+            output.textContent = 'Extraction complete. Ready to label sprites.\n\n';
+            output.textContent += 'Data structure created with placeholders for labels.\n';
+            output.textContent += `Total sprites: ${SHEETS.length * ROWS * COLS}\n\n`;
+            output.textContent += 'Next: Copy sprite data URLs and use AI vision to generate labels.';
+        }
+
+        function downloadJSON() {
+            const dataStr = JSON.stringify(extractedSprites, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'extracted-sprites.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard() {
+            const dataStr = JSON.stringify(extractedSprites, null, 2);
+            navigator.clipboard.writeText(dataStr).then(() => {
+                alert('Sprite data copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>

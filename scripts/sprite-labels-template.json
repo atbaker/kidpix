@@ -1,0 +1,115 @@
+{
+  "_comment": "KidPix Sprite Labels - Manual Labeling Template",
+  "_instructions": "Replace each 'TODO' with a short descriptive label for the sprite at that position. Use lowercase, simple names like 'palm tree', 'rocket ship', 'elephant'. Open sprite-reference.html to see the sprites with coordinates.",
+  "_format": "Each sheet has 7 rows (0-6) and 14 columns (0-13). Total: 980 sprites across 10 sheets.",
+
+  "0": {
+    "_sheet_name": "kidpix-spritesheet-0.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "1": {
+    "_sheet_name": "kidpix-spritesheet-0b.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "2": {
+    "_sheet_name": "kidpix-spritesheet-1.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "3": {
+    "_sheet_name": "kidpix-spritesheet-2.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "4": {
+    "_sheet_name": "kidpix-spritesheet-3.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "5": {
+    "_sheet_name": "kidpix-spritesheet-4.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "6": {
+    "_sheet_name": "kidpix-spritesheet-5.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "7": {
+    "_sheet_name": "kidpix-spritesheet-6.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "8": {
+    "_sheet_name": "kidpix-spritesheet-7.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  },
+
+  "9": {
+    "_sheet_name": "kidpix-spritesheet-8.png",
+    "0": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "1": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "2": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "3": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "4": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "5": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"],
+    "6": ["TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO", "TODO"]
+  }
+}
