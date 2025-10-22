@@ -59,7 +59,7 @@ KiddoPaint.Sprite.labels = {
             "stegosaurus",
             "rabbit",
             "person on skateboard",
-            "clown (scary)",
+            "clown",
             "horse",
             "UFO with aliens",
             "fish",
@@ -72,7 +72,7 @@ KiddoPaint.Sprite.labels = {
             "man",
             "woman",
             "treble clef",
-            "teddy bear (scary)",
+            "teddy bear",
             "stop sign",
             "airplane",
             "gas pump",
@@ -89,7 +89,7 @@ KiddoPaint.Sprite.labels = {
             "band aid",
             "turtle",
             "flower",
-            "house (scary)",
+            "house",
             "footprints",
             "star",
             "crab",
@@ -115,6 +115,22 @@ KiddoPaint.Sprite.labels = {
             "arrow pointing up and right",
             "thumb tack",
             "flower"
+        ],
+        "7": [
+            "pineapple",
+            "pink bow",
+            "light bulb",
+            "wristwatch",
+            "raven",
+            "baby (head)",
+            "eye with eyebrow",
+            "fried egg",
+            "spray paint can",
+            "pear",
+            "yellow duck",
+            "tree",
+            "cargo truck",
+            "shamrock"
         ]
     },
     "1": {
@@ -229,6 +245,22 @@ KiddoPaint.Sprite.labels = {
             "red bow",
             "paw prints",
             "eye"
+        ],
+        "7": [
+            "medal",
+            "wristwatch",
+            "scissors",
+            "hammer",
+            "heart",
+            "musical notes",
+            "baseball bat with ball",
+            "football",
+            "basketball",
+            "soccer ball",
+            "teapot",
+            "tea cup and saucer",
+            "blue key",
+            "pencil"
         ]
     },
     "2": {
@@ -343,6 +375,22 @@ KiddoPaint.Sprite.labels = {
             "satellite dish",
             "satellite",
             "planets and stars"
+        ],
+        "7": [
+            "eclipse",
+            "partial eclipse",
+            "sun with menacing smile",
+            "cat in astronaut suit",
+            "dog in astronaut suit",
+            "green alien",
+            "robot",
+            "red alien",
+            "yellow alien wearing swim trunks",
+            "celestial explosion",
+            "palm leaf",
+            "computer motherboard",
+            "comet in space",
+            "grassy plants"
         ]
     },
     "3": {
@@ -457,6 +505,22 @@ KiddoPaint.Sprite.labels = {
             "tiger (right half)",
             "egg",
             "tarantula"
+        ],
+        "7": [
+            "snake",
+            "owl",
+            "alligator",
+            "rabbit",
+            "bird",
+            "fox",
+            "[unidentified mammal]",
+            "scorpion",
+            "hawk",
+            "arrowhead",
+            "flowering cactus",
+            "saguaro cactus",
+            "squirrel",
+            "armadillo"
         ]
     },
     "4": {
@@ -571,6 +635,22 @@ KiddoPaint.Sprite.labels = {
             "topiary shaped like a snowman",
             "city tree (bottom)",
             "city tree (top)"
+        ],
+        "7": [
+            "biplane",
+            "jet",
+            "blimp",
+            "hot air balloon",
+            "fighter jet (left side)",
+            "fighter jet (right side)",
+            "helicopter",
+            "hovercraft",
+            "tugboat",
+            "sailboat",
+            "cruiseliner (left)",
+            "cruiseliner (middle)",
+            "cruiseliner (right)",
+            "cruiseliner (funnel)"
         ]
     },
     "5": {
@@ -685,6 +765,22 @@ KiddoPaint.Sprite.labels = {
             "juke box",
             "lipstick with cap",
             "locket on necklace"
+        ],
+        "7": [
+            "man",
+            "woman wearing tiara",
+            "burglar carrying sack",
+            "corner of sundial",
+            "hummingbird",
+            "anthropomorphized elderly platypus",
+            "camel (head)",
+            "motorcycle",
+            "purple horse",
+            "sportscar",
+            "helicopter",
+            "tuba",
+            "confetti",
+            "old timey movie camera"
         ]
     },
     "6": {
@@ -799,6 +895,22 @@ KiddoPaint.Sprite.labels = {
             "ape",
             "caveman",
             "person floating in inner tube"
+        ],
+        "7": [
+            "crocodile (head)",
+            "ancient central american ruin",
+            "sailing ship",
+            "sailing ship",
+            "pirate (full body)",
+            "pirate (head)",
+            "skull and crossbones",
+            "crocodile",
+            "iguana",
+            "woman smiling",
+            "elephant",
+            "toucan",
+            "raft with sail",
+            "starry night sky with moon and clouds"
         ]
     },
     "7": {
@@ -913,6 +1025,22 @@ KiddoPaint.Sprite.labels = {
             "trapezoidal eye",
             "yellow alien (head)",
             "yellow alien (body)"
+        ],
+        "7": [
+            "alligator (head)",
+            "alligator (body)",
+            "alligator (left leg)",
+            "alligator (right leg)",
+            "alligator (left arm)",
+            "alligator (right arm)",
+            "monster (head)",
+            "monster (body)",
+            "goblin (head)",
+            "goblin (body)",
+            "monster wing (left)",
+            "monster wing (right)",
+            "monster eyes (many)",
+            "tentacle"
         ]
     },
     "8": {
@@ -1027,6 +1155,22 @@ KiddoPaint.Sprite.labels = {
             "band aid",
             "tissue box",
             "hair dryer"
+        ],
+        "7": [
+            "audio speaker",
+            "tape recorder",
+            "audio equipment",
+            "audio equipment",
+            "VCR",
+            "TV",
+            "desktop PC",
+            "keyboard and mouse",
+            "boom box",
+            "casette tape",
+            "bonsai tree",
+            "urn",
+            "books arranged for a bookshelf",
+            "touch tone telephone"
         ]
     },
     "9": {
@@ -1141,6 +1285,22 @@ KiddoPaint.Sprite.labels = {
             "open book",
             "cartoon bomb with lit fuse",
             "flashlight (turned on)"
+        ],
+        "7": [
+            "shoe with hole in bottom",
+            "empty soup can",
+            "broken coffee mug",
+            "fire hydrant",
+            "crow",
+            "old timey telephone",
+            "briefcase",
+            "beads",
+            "touch tone telephone",
+            "typewriter",
+            "jewels",
+            "safe",
+            "combination lock",
+            "umbrella"
         ]
     }
 };

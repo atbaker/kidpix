@@ -14,35 +14,31 @@ KiddoPaint.Sprite.sheets = [
     'img/kidpix-spritesheet-8.png',
 ];
 
-KiddoPaint.Sprite.nextSprite = function() {
-    const maxrow = KiddoPaint.Sprite.sheets.length - 1;
-    KiddoPaint.Sprite.sheetPage += 1;
-    if (KiddoPaint.Sprite.sheetPage > maxrow) {
-        KiddoPaint.Sprite.sheetPage = 0;
-    }
-}
-
-KiddoPaint.Sprite.prevSprite = function() {
-    const maxrow = KiddoPaint.Sprite.sheets.length - 1;
-    KiddoPaint.Sprite.sheetPage -= 1;
-    if (KiddoPaint.Sprite.sheetPage < 0) {
-        KiddoPaint.Sprite.sheetPage = maxrow;
-    }
-}
-
 KiddoPaint.Sprite.nextPage = function() {
-    const maxrow = 7;
+    const maxPage = 7;
+    const maxPack = KiddoPaint.Sprite.sheets.length - 1;
+
     KiddoPaint.Sprite.page += 1;
-    if (KiddoPaint.Sprite.page > maxrow) {
+    if (KiddoPaint.Sprite.page > maxPage) {
         KiddoPaint.Sprite.page = 0;
+        KiddoPaint.Sprite.sheetPage += 1;
+        if (KiddoPaint.Sprite.sheetPage > maxPack) {
+            KiddoPaint.Sprite.sheetPage = 0;
+        }
     }
 }
 
 KiddoPaint.Sprite.prevPage = function() {
-    const maxrow = 7;
+    const maxPage = 7;
+    const maxPack = KiddoPaint.Sprite.sheets.length - 1;
+
     KiddoPaint.Sprite.page -= 1;
     if (KiddoPaint.Sprite.page < 0) {
-        KiddoPaint.Sprite.page = maxrow;
+        KiddoPaint.Sprite.page = maxPage;
+        KiddoPaint.Sprite.sheetPage -= 1;
+        if (KiddoPaint.Sprite.sheetPage < 0) {
+            KiddoPaint.Sprite.sheetPage = maxPack;
+        }
     }
 }
 
@@ -91,20 +87,20 @@ function init_sprites_submenu() {
     }
 
     KiddoPaint.Submenu.sprites.push({
-        name: 'Next Page',
-        text: 'NEXT PAGE',
+        name: 'Prev Page',
+        text: 'PREV PAGE',
         handler: function(e) {
-            (e.type == 'contextmenu') ? KiddoPaint.Sprite.prevPage(): KiddoPaint.Sprite.nextPage();
+            KiddoPaint.Sprite.prevPage();
             init_sprites_submenu();
             show_generic_submenu('sprites');
         }
     });
 
     KiddoPaint.Submenu.sprites.push({
-        name: 'Next Stamp Pack',
-        text: 'NEXT PACK',
+        name: 'Next Page',
+        text: 'NEXT PAGE',
         handler: function(e) {
-            (e.type == 'contextmenu') ? KiddoPaint.Sprite.prevSprite(): KiddoPaint.Sprite.nextSprite();
+            KiddoPaint.Sprite.nextPage();
             init_sprites_submenu();
             show_generic_submenu('sprites');
         }
