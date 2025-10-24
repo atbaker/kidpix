@@ -33,7 +33,7 @@ var ToolNames = {
 
 // Timer variables
 var countdownTimer = null;
-var remainingSeconds = 5 * 60; // 5 minutes
+var remainingSeconds = 10 * 60; // 10 minutes
 
 // Current subtool name tracking
 KiddoPaint.Current.subtoolName = null;
