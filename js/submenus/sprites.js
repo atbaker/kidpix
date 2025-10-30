@@ -1,6 +1,5 @@
 KiddoPaint.Submenu.sprites = [];
 
-KiddoPaint.Sprite.sheetPage = 0;
 KiddoPaint.Sprite.sheets = [
     'img/kidpix-spritesheet-0.png',
     'img/kidpix-spritesheet-0b.png',
@@ -14,66 +13,68 @@ KiddoPaint.Sprite.sheets = [
     'img/kidpix-spritesheet-8.png',
 ];
 
-KiddoPaint.Sprite.nextPage = function() {
-    const maxPage = 7;
-    const maxPack = KiddoPaint.Sprite.sheets.length - 1;
+// Current search query
+KiddoPaint.Sprite.searchQuery = '';
 
-    KiddoPaint.Sprite.page += 1;
-    if (KiddoPaint.Sprite.page > maxPage) {
-        KiddoPaint.Sprite.page = 0;
-        KiddoPaint.Sprite.sheetPage += 1;
-        if (KiddoPaint.Sprite.sheetPage > maxPack) {
-            KiddoPaint.Sprite.sheetPage = 0;
-        }
+// Debounce timer for search input
+KiddoPaint.Sprite.searchDebounceTimer = null;
+
+
+async function init_sprites_submenu() {
+    // Initialize search if not already done
+    if (!KiddoPaint.StampSearch.isReady && !KiddoPaint.StampSearch.isLoading) {
+        KiddoPaint.StampSearch.init();
     }
-}
-
-KiddoPaint.Sprite.prevPage = function() {
-    const maxPage = 7;
-    const maxPack = KiddoPaint.Sprite.sheets.length - 1;
-
-    KiddoPaint.Sprite.page -= 1;
-    if (KiddoPaint.Sprite.page < 0) {
-        KiddoPaint.Sprite.page = maxPage;
-        KiddoPaint.Sprite.sheetPage -= 1;
-        if (KiddoPaint.Sprite.sheetPage < 0) {
-            KiddoPaint.Sprite.sheetPage = maxPack;
-        }
-    }
-}
-
-
-function init_sprites_submenu() {
-    let sheet = KiddoPaint.Sprite.sheets[KiddoPaint.Sprite.sheetPage];
-    const maxcols = 14;
-
-    let row = KiddoPaint.Sprite.page;
 
     KiddoPaint.Submenu.sprites = [];
 
-    for (let j = 0; j < maxcols; j++) {
-        let spriteNumber = row * maxcols + j + 1;
-
-        // Get label from sprite labels data structure, with fallback
-        let spriteName = 'Sprite ' + spriteNumber; // Default fallback
-        if (KiddoPaint.Sprite.labels &&
-            KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage] &&
-            KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage][row] &&
-            KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage][row][j]) {
-            spriteName = KiddoPaint.Sprite.labels[KiddoPaint.Sprite.sheetPage][row][j];
+    // Add search input as first item (invisible button with custom rendering)
+    KiddoPaint.Submenu.sprites.push({
+        name: 'Search stamps',
+        invisible: true,
+        isSearchInput: true,
+        handler: function(e) {
+            // Prevent default button behavior (event may be undefined from invokeDefaultSubtool)
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
         }
+    });
+
+    // Get search results (or all stamps if no query)
+    let stamps = [];
+    if (KiddoPaint.StampSearch.isReady) {
+        stamps = await KiddoPaint.StampSearch.search(KiddoPaint.Sprite.searchQuery, 14);
+    } else {
+        // Show first 14 stamps while search initializes
+        stamps = KiddoPaint.Sprite.labels ?
+            Object.values(KiddoPaint.Sprite.labels)[0][0].slice(0, 14).map((label, i) => ({
+                label: label,
+                sheet: 0,
+                row: 0,
+                col: i
+            })) : [];
+    }
+
+    // Add stamp buttons
+    stamps.forEach(stamp => {
+        let sheet = KiddoPaint.Sprite.sheets[stamp.sheet];
 
         let individualSprite = {
-            name: spriteName,
+            name: stamp.label,
             spriteSheet: sheet,
-            spriteRow: row,
-            spriteCol: j,
+            spriteRow: stamp.row,
+            spriteCol: stamp.col,
             handler: function(e) {
                 var img = new Image();
                 img.src = sheet;
                 img.crossOrigin = 'anonymous';
                 img.onload = function() {
-                    KiddoPaint.Tools.SpritePlacer.image = scaleImageDataCanvasAPIPixelated(extractSprite(img, 32, j, row, 0), 2);
+                    KiddoPaint.Tools.SpritePlacer.image = scaleImageDataCanvasAPIPixelated(
+                        extractSprite(img, 32, stamp.col, stamp.row, 0),
+                        2
+                    );
                     KiddoPaint.Tools.SpritePlacer.soundBefore = function() {
                         KiddoPaint.Sounds.stamp();
                     };
@@ -81,29 +82,21 @@ function init_sprites_submenu() {
                     KiddoPaint.Current.tool = KiddoPaint.Tools.SpritePlacer;
                 };
             }
-        }
+        };
 
         KiddoPaint.Submenu.sprites.push(individualSprite);
+    });
+
+    // If no results, show a message
+    if (stamps.length === 0 && KiddoPaint.Sprite.searchQuery) {
+        KiddoPaint.Submenu.sprites.push({
+            name: 'No stamps found',
+            text: 'No results',
+            handler: function(e) {
+                if (e) {
+                    e.preventDefault();
+                }
+            }
+        });
     }
-
-    KiddoPaint.Submenu.sprites.push({
-        name: 'Prev Page',
-        text: 'PREV PAGE',
-        handler: function(e) {
-            KiddoPaint.Sprite.prevPage();
-            init_sprites_submenu();
-            show_generic_submenu('sprites');
-        }
-    });
-
-    KiddoPaint.Submenu.sprites.push({
-        name: 'Next Page',
-        text: 'NEXT PAGE',
-        handler: function(e) {
-            KiddoPaint.Sprite.nextPage();
-            init_sprites_submenu();
-            show_generic_submenu('sprites');
-        }
-    });
-
 }

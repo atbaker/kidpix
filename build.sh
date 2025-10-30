@@ -9,6 +9,8 @@ echo [format] Format JS and CSS.
 node_modules/js-beautify/js/bin/js-beautify.js -r js/**/*
 node_modules/js-beautify/js/bin/js-beautify.js -r css/*
 
+echo [embeddings] Generating stamp embeddings...
+node scripts/generate-embeddings.js
 
 echo -n [build] Building JS Kid Pix app.js..
 

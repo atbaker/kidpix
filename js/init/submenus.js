@@ -23,6 +23,49 @@ function show_generic_submenu(subtoolbar) {
     genericsubmenu.removeAllChildren();
     for (var i = 0, len = KiddoPaint.Submenu[subtoolbar].length; i < len; i++) {
         var buttonDetail = KiddoPaint.Submenu[subtoolbar][i];
+
+        // Special handling for search input
+        if (buttonDetail.isSearchInput) {
+            var searchContainer = document.createElement('div');
+            searchContainer.className = 'stamp-search-container';
+            searchContainer.style.cssText = 'width: 100%; padding: 5px; box-sizing: border-box;';
+
+            var searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.id = 'stamp-search-input';
+            searchInput.placeholder = 'Search stamps...';
+            searchInput.className = 'stamp-search-input';
+            searchInput.style.cssText = 'width: 100%; padding: 8px; font-size: 14px; border: 2px solid #000; box-sizing: border-box;';
+            searchInput.value = KiddoPaint.Sprite.searchQuery || '';
+
+            // Debounced search handler
+            searchInput.addEventListener('input', function(e) {
+                var query = e.target.value;
+                KiddoPaint.Sprite.searchQuery = query;
+
+                // Debounce the search
+                if (KiddoPaint.Sprite.searchDebounceTimer) {
+                    clearTimeout(KiddoPaint.Sprite.searchDebounceTimer);
+                }
+
+                KiddoPaint.Sprite.searchDebounceTimer = setTimeout(function() {
+                    init_sprites_submenu().then(function() {
+                        show_generic_submenu('sprites');
+                        // Restore focus to search input
+                        var input = document.getElementById('stamp-search-input');
+                        if (input) {
+                            input.focus();
+                            input.setSelectionRange(query.length, query.length);
+                        }
+                    });
+                }, 300);
+            });
+
+            searchContainer.appendChild(searchInput);
+            genericsubmenu.appendChild(searchContainer);
+            continue;
+        }
+
         var button = document.createElement('button');
         button.className = 'tool';
 

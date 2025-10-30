@@ -299,6 +299,12 @@ function init_listeners(canvas) {
     canvas.addEventListener("drop", image_upload);
 
     document.onkeydown = function checkKey(e) {
+        // Ignore keyboard shortcuts when user is typing in an input field
+        var activeElement = document.activeElement;
+        if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
+            return;
+        }
+
         if (e.keyCode == 16) {
             KiddoPaint.Current.scaling = 2;
             KiddoPaint.Current.modified = true;
@@ -545,10 +551,12 @@ function init_tool_bar() {
         if (KiddoPaint.Current.modifiedCtrl) {
             show_generic_submenu('stickers');
         } else {
-            init_sprites_submenu(); // automatically does for current page
-            show_generic_submenu('sprites');
-            KiddoPaint.Tools.Stamp.useColor = false;
-            invokeDefaultSubtool('sprites');
+            // Handle async search initialization
+            init_sprites_submenu().then(function() {
+                show_generic_submenu('sprites');
+                KiddoPaint.Tools.Stamp.useColor = false;
+                invokeDefaultSubtool('sprites');
+            });
         }
     });
 

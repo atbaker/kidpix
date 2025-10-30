@@ -4,6 +4,8 @@
   "description": "JS Kid Pix",
   "main": "js/app.js",
   "devDependencies": {
+    "@huggingface/transformers": "^3.7.6",
+    "fuse.js": "^7.1.0",
     "uglify-js": "^2.8.29"
   },
   "scripts": {
